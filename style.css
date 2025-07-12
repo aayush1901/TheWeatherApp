@@ -1,0 +1,91 @@
+/* ✅ Full Page Setup */
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  color: white;
+  background-color: #121212;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  min-height: 100vh;
+}
+
+/* ✅ Navigation Bar */
+nav {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  background-color: rgba(0, 0, 0, 0.6);
+  padding: 10px;
+}
+
+nav button {
+  margin: 5px 10px;
+  padding: 10px 20px;
+  background-color: #1e1e1e;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+nav button:hover {
+  background-color: #333;
+}
+
+/* ✅ Logo */
+#headImage {
+  text-align: center;
+  margin: 20px 0;
+}
+
+/* ✅ Input Field and Button */
+#city, #getWeather {
+  display: block;
+  margin: 10px auto;
+  padding: 10px;
+  font-size: 1rem;
+  border-radius: 5px;
+  border: none;
+}
+
+#city {
+  width: 250px;
+}
+
+#getWeather {
+  background-color: #007acc;
+  color: white;
+  cursor: pointer;
+}
+
+#getWeather:hover {
+  background-color: #005f99;
+}
+
+/* ✅ Weather + AQI Container */
+#weather_container {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 20px;
+  flex-wrap: wrap;
+  margin-top: 20px;
+  padding: 0 20px;
+}
+
+/* ✅ Output Boxes */
+#city_weather, #city_aqi {
+  font-size: 1.1rem;
+  padding: 15px;
+  background-color: rgba(0,0,0,0.5);
+  border-radius: 10px;
+  min-width: 250px;
+  max-width: 300px;
+  color: white;
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  box-shadow: 0 0 15px rgba(0,0,0,0.4);
+  margin-bottom: 20px;
+}

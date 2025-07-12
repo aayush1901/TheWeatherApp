@@ -1,0 +1,10 @@
+# Ignore sensitive keys
+.env
+config.js
+
+# Ignore node modules (if using npm later)
+node_modules/
+
+# System files (OS junk)
+.DS_Store
+Thumbs.db
