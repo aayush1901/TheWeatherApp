@@ -34,6 +34,8 @@ this.navigator.geolocation.getCurrentPosition(
         let lon = position.coords.longitude;
         console.log("latitude: ",position.coords.latitude);
         console.log("longitude: ",position.coords.longitude);
+
+        forecastGraph(lat,lon);
                
         const weatherUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKi}&units=metric`;
 
@@ -129,6 +131,8 @@ fetch(getUrl)
     else{
         let lat=geoData[0].lat;
         let lon = geoData[0].lon;
+
+        forecastGraph(lat,lon);
         
         const weatherUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}&units=metric`;
 
@@ -186,6 +190,100 @@ fetch(aqiUrl)
 
 
 
+}
+
+
+function forecastGraph(lat,lon){
+    
+    const api_Key =config.apiKey;
+   const forecastUrl = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${api_Key}&units=metric`;
+
+    fetch(forecastUrl)
+        .then(response => response.json())
+        .then(forecastData => {
+            const list = forecastData.list;
+
+            const dailyData = [];
+            const labels = [];
+
+            // pick 1 reading per day (at 12:00:00)
+            for (let i = 0; i < list.length; i++) {
+                const item = list[i];
+                const time = item.dt_txt.split(' ')[1];
+                if (time === "12:00:00") {
+                    const date = new Date(item.dt * 1000);
+                    labels.push(date.toLocaleDateString('en-US', { weekday: 'short' }));
+                    dailyData.push(item.main.temp);
+                }
+            }
+
+            if (window.forecastChart) {
+                window.forecastChart.destroy();
+            }
+
+    const ctx = document.getElementById('forecast').getContext('2d');
+    window.forecastChart = new Chart(ctx,{
+        type : 'line',
+        data : {
+            labels :labels,
+            datasets :[{
+                label:'Temperature(C)',
+                data : dailyData,
+                borderColor: 'rgba(190, 75, 192, 1)',
+                backgroundColor : 'rgba(91, 9, 89, 0.6)',
+                tension : 0.4,
+                fill : true
+            }]
+
+        },
+      options: {
+  responsive: true,
+  plugins: {
+    legend: {
+      labels: {
+        color: '#ffffff'
+      }
+    },
+    tooltip: {
+      titleColor: '#ffffff',
+      bodyColor: '#ffffff',
+      backgroundColor: '#333333'
+    }
+  },
+  scales: {
+    x: {
+      ticks: {
+        color: '#ffffff',
+        font: {
+          size: 14,
+          weight: 'bold'
+        }
+      },
+      grid: {
+        color: '#ffffff20'
+      }
+    },
+    y: {
+      ticks: {
+        color: '#ffffff',
+        font: {
+          size: 14,
+          weight: 'bold'
+        }
+      },
+      grid: {
+        color: '#ffffff20'
+      }
+    }
+  }
+}
+
+    });
+})
+.catch(err=>{
+    console.log("forecast graph fetch error: ",err);
+    alert("ERROR IN LOADING FORECAST RIGHT NOW, PLEASE TRY LATER");
+});
 }
 //
 
